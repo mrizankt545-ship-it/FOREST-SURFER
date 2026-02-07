@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+    <!-- Ground Shadow -->
+    <ellipse cx="50" cy="95" rx="22" ry="6" fill="rgba(0,0,0,0.4)" />
+    
+    <!-- Face/Skin -->
+    <circle cx="50" cy="20" r="13" fill="#ffdbac" />
+    
+    <!-- Hair (Front) -->
+    <path d="M37 18 Q50 5 63 18 Q63 25 50 25 Q37 25 37 18" fill="#221100" />
+    
+    <!-- Eyes -->
+    <circle cx="45" cy="18" r="1.5" fill="#333" />
+    <circle cx="55" cy="18" r="1.5" fill="#333" />
+    
+    <!-- Cap (Front View) -->
+    <path d="M38 15 Q50 5 62 15 L62 20 Q50 12 38 20 Z" fill="#222" />
+    
+    <!-- Shirt (Front) -->
+    <path d="M35 30 L65 30 L70 65 L30 65 Z" fill="#ffffff" />
+    <path d="M50 30 V65" stroke="#eee" stroke-width="1" /> <!-- Shirt detail -->
+    
+    <!-- Arms (Front View, Pumping) -->
+    <path class="arm-left" d="M35 35 L20 50 L30 60" stroke="#ffdbac" stroke-width="8" stroke-linecap="round" fill="none" />
+    <path class="arm-right" d="M65 35 L80 50 L70 60" stroke="#ffdbac" stroke-width="8" stroke-linecap="round" fill="none" />
+    
+    <!-- Legs (Front View, Knees coming at camera) -->
+    <path class="leg-left" d="M40 65 L35 85 L40 92" stroke="#1a4d8c" stroke-width="12" stroke-linecap="round" fill="none" />
+    <path class="leg-right" d="M60 65 L65 85 L60 92" stroke="#1a4d8c" stroke-width="12" stroke-linecap="round" fill="none" />
+</svg>

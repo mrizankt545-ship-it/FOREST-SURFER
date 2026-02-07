@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forest Surfer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="ui-layer">
+        <!-- Top Right: Game Logo -->
+        <div class="game-logo">
+            <svg viewBox="0 0 50 50" class="logo-icon">
+                <path d="M25 5 L5 40 H45 Z" fill="none" stroke="#4ade80" stroke-width="3" />
+                <path d="M25 15 L15 35 H35 Z" fill="#4ade80" opacity="0.8" />
+            </svg>
+            <span>FS</span>
+        </div>
+    </div>
+
+    <div class="fog-container">
+        <div class="fog-img fog-img-first"></div>
+        <div class="fog-img fog-img-second"></div>
+    </div>
+
+    <div class="scene" id="introScene">
+        <div class="close-bar" id="closeBtn">
+            <span class="bar line1"></span>
+            <span class="bar line2"></span>
+        </div>
+        <h1 class="title">Forest Surfer</h1>
+        <div class="runner-container">
+            <svg class="runner-svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
+                <path class="leg-left" d="M42 60 L38 75 L35 90" fill="black" />
+                <path class="leg-right" d="M58 60 L62 75 L65 90" fill="black" />
+                <path d="M35 62 L30 25 L70 25 L65 62 Z" fill="black" />
+                <path class="arm-left" d="M30 28 L20 40 L25 45" stroke="black" stroke-width="9" stroke-linecap="round"
+                    fill="none" />
+                <path class="arm-right" d="M70 28 L80 40 L75 45" stroke="black" stroke-width="9" stroke-linecap="round"
+                    fill="none" />
+                <circle cx="50" cy="18" r="14" fill="black" />
+            </svg>
+        </div>
+        <div class="tap-start">Tap to Start</div>
+    </div>
+
+    <!-- Home Screen (Initially Hidden) -->
+    <div class="home-screen" id="homeScreen">
+        <div class="settings-icon-container" id="settingsBtn">
+            <svg viewBox="0 0 24 24" class="settings-svg">
+                <path
+                    d="M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.04 4.95,18.95L7.44,17.95C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.68 16.04,18.34 16.56,17.95L19.05,18.95C19.27,19.04 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z"
+                    fill="currentColor" />
+            </svg>
+        </div>
+
+        <h2 class="home-title">Main Menu</h2>
+        <button class="start-btn" id="startBtn">Play Now</button>
+
+        <!-- Loading Circle (Initially Hidden) -->
+        <div class="loader-container" id="gameLoader">
+            <svg class="loader-svg" width="80" height="80" viewBox="0 0 100 100">
+                <circle class="loader-bg" cx="50" cy="50" r="45"></circle>
+                <circle class="loader-progress" cx="50" cy="50" r="45"></circle>
+            </svg>
+            <div class="loader-text" id="loaderCount">2</div>
+        </div>
+
+        <!-- Settings Modal Overlay -->
+        <div class="settings-modal-overlay" id="settingsModal">
+            <div class="settings-content">
+                <h3 class="settings-title">Settings</h3>
+
+                <div class="setting-row" id="musicToggle">
+                    <div class="setting-label">
+                        <svg class="setting-icon" viewBox="0 0 24 24">
+                            <path
+                                d="M12,3V12.26C11.5,12.09 11,12 10.5,12C8,12 6,14 6,16.5C6,19 8,21 10.5,21C13,21 15,19 15,16.5V6H19V3H12Z"
+                                fill="currentColor" />
+                        </svg>
+                        <span>Music</span>
+                    </div>
+                    <div class="toggle-switch active">
+                        <div class="toggle-circle"></div>
+                    </div>
+                </div>
+
+                <div class="setting-row" id="soundToggle">
+                    <div class="setting-label">
+                        <svg class="setting-icon" viewBox="0 0 24 24">
+                            <path
+                                d="M14,3.23V5.29C16.89,6.15 19,8.83 19,12C19,15.17 16.89,17.84 14,18.7V20.77C18,19.86 21,16.28 21,12C21,7.72 18,4.14 14,3.23M16.5,12C16.5,10.23 15.48,8.71 14,7.97V16.02C15.48,15.29 16.5,13.76 16.5,12M3,9V15H7L12,20V4L7,9H3Z"
+                                fill="currentColor" />
+                        </svg>
+                        <span>Sound</span>
+                    </div>
+                    <div class="toggle-switch active">
+                        <div class="toggle-circle"></div>
+                    </div>
+                </div>
+
+                <div class="controls-section">
+                    <h4>Controls</h4>
+                    <div class="control-choices">
+                        <div class="control-card selected" id="ctrlTouch">
+                            <div class="control-icons">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z"
+                                        fill="currentColor" />
+                                </svg>
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"
+                                        fill="currentColor" />
+                                </svg>
+                            </div>
+                            <span>Touch</span>
+                        </div>
+                        <div class="control-card" id="ctrlGyro">
+                            <div class="control-icons">
+                                <svg viewBox="0 0 24 24">
+                                    <path
+                                        d="M17,1.01L7,1C5.9,1 5,1.9 5,3V17A2,2 0 0,0 7,19H17A2,2 0 0,0 19,17V3C19,1.9 18.1,1.01 17,1.01M17,17H7V3H17V17M16,10H8V8H16V10M13.5,6L11,4L8.5,6H13.5M10.5,14L13,16L15.5,14H10.5Z"
+                                        fill="currentColor" />
+                                </svg>
+                            </div>
+                            <span>Gyro</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="select-btn" id="closeSettingsBtn">Select</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Active Game Scene (Temple Run Style) -->
+    <div class="game-scene" id="gameScene" style="display: none;">
+        <div class="forest-background">
+            <div class="tree-layer layer-far"></div>
+            <div class="tree-layer layer-mid"></div>
+        </div>
+        <div class="side-trees left"></div>
+        <div class="side-trees right"></div>
+        <div class="road-container">
+            <div class="road"></div>
+        </div>
+        <div class="runner-container-game lane-1">
+            <svg class="runner-svg front-view" viewBox="0 0 100 100">
+                <ellipse class="ground-shadow" cx="50" cy="95" rx="22" ry="6" fill="rgba(0,0,0,0.4)" />
+                <circle class="face" cx="50" cy="20" r="13" fill="#ffdbac" />
+                <path class="hair" d="M37 18 Q50 5 63 18 Q63 25 50 25 Q37 25 37 18" fill="#221100" />
+                <circle class="eye-l" cx="45" cy="18" r="1.5" fill="#333" />
+                <circle class="eye-r" cx="55" cy="18" r="1.5" fill="#333" />
+                <path class="cap-front" d="M38 15 Q50 5 62 15 L62 20 Q50 12 38 20 Z" fill="#222" />
+                <path class="shirt-front" d="M35 30 L65 30 L70 65 L30 65 Z" fill="#ffffff" />
+                <path class="arm-left" d="M35 35 L20 50 L30 60" stroke="#ffdbac" stroke-width="8" stroke-linecap="round"
+                    fill="none" />
+                <path class="arm-right" d="M65 35 L80 50 L70 60" stroke="#ffdbac" stroke-width="8"
+                    stroke-linecap="round" fill="none" />
+                <path class="leg-left" d="M40 65 L35 85 L40 92" stroke="#1a4d8c" stroke-width="12"
+                    stroke-linecap="round" fill="none" />
+                <path class="leg-right" d="M60 65 L65 85 L60 92" stroke="#1a4d8c" stroke-width="12"
+                    stroke-linecap="round" fill="none" />
+            </svg>
+        </div>
+        <div class="pause-btn" id="pauseBtn">
+            <svg viewBox="0 0 24 24">
+                <path d="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z" fill="currentColor" />
+            </svg>
+        </div>
+        <div class="ui-overlay">
+            <div class="score">Score: 0</div>
+        </div>
+
+        <!-- Pause Menu Modal -->
+        <div class="pause-menu-overlay" id="pauseMenu">
+            <div class="pause-content">
+                <h3 class="pause-title">Paused</h3>
+                <button class="pause-option-btn" id="resumeBtn">Resume</button>
+                <button class="pause-option-btn" id="pauseHomeBtn">Home</button>
+                <button class="pause-option-btn quit" id="pauseQuitBtn">Quit</button>
+            </div>
+        </div>
+        <div class="game-over" id="gameOver">
+            <h2>Wasted!</h2>
+            <div class="final-score">Score: 0</div>
+            <div class="game-over-actions">
+                <button class="restart-btn" id="restartBtn">Try Again</button>
+                <button class="home-btn-go" id="gameOverHomeBtn">Home</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

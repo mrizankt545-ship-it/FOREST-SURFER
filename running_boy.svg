@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+    <!-- Drop shadow -->
+    <ellipse cx="50" cy="95" rx="20" ry="5" fill="rgba(0,0,0,0.5)" />
+
+    <!-- Left Leg (Back) -->
+    <path d="M42 60 L38 75 L35 90" stroke="#1a4d8c" stroke-width="12" stroke-linecap="round" fill="none" />
+    <!-- Right Leg (Back) -->
+    <path d="M58 60 L62 75 L65 90" stroke="#1a4d8c" stroke-width="12" stroke-linecap="round" fill="none" />
+
+    <!-- Shirt Main -->
+    <path d="M35 62 L30 25 L70 25 L65 62 Z" fill="#ffffff" />
+
+    <!-- Left Arm (Pumping) -->
+    <path d="M30 28 L20 40 L25 45" stroke="#ffffff" stroke-width="9" stroke-linecap="round" fill="none" />
+    <circle cx="25" cy="48" r="4" fill="#ffdbac" />
+
+    <!-- Right Arm (Pumping) -->
+    <path d="M70 28 L80 40 L75 45" stroke="#ffffff" stroke-width="9" stroke-linecap="round" fill="none" />
+    <circle cx="75" cy="48" r="4" fill="#ffdbac" />
+
+    <!-- Head (Back View) -->
+    <circle cx="50" cy="18" r="14" fill="#111" /> <!-- Hair -->
+    <path d="M38 20 Q50 30 62 20" stroke="#111" stroke-width="0" fill="#111" /> <!-- Hairline style -->
+
+    <!-- Cap Back -->
+    <path d="M40 18 Q50 12 60 18 L60 22 Q50 16 40 22 Z" fill="#222" />
+</svg>

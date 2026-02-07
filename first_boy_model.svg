@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+    <!-- Head -->
+    <circle cx="50" cy="30" r="12" fill="black" />
+    <!-- Cap -->
+    <path d="M40 22 L65 22 L65 28 L40 28 L35 28 C30 28 30 22 40 22 Z" fill="black" />
+    <!-- Body -->
+    <path d="M50 42 L45 60 L30 55 L25 65 L45 70 L52 60 L58 70 L75 60 L70 55 L55 62 L55 42 L65 55 L75 45 L70 40 L58 50 L50 42 Z" fill="black" />
+</svg>

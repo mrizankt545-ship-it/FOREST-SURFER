@@ -1,0 +1,1322 @@
+:root {
+    --bg-color: #020503;
+    --text-color: #cfead5;
+    --glow-color: #4ade80;
+    --horror-fog: #0f2e1d;
+    --ui-z-index: 100;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-color);
+    background: linear-gradient(to bottom, #000000 0%, #05140a 100%);
+    font-family: 'Outfit', sans-serif;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* UI Layer (Top Controls) */
+.ui-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    /* Let clicks pass through to game usually, but enable for buttons */
+    z-index: var(--ui-z-index);
+}
+
+.close-bar {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    pointer-events: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    transition: transform 0.3s ease;
+    z-index: 100;
+}
+
+.close-bar:hover {
+    transform: rotate(90deg);
+}
+
+.close-bar .bar {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background-color: var(--text-color);
+    border-radius: 2px;
+    box-shadow: 0 0 10px var(--glow-color);
+    transition: all 0.3s ease;
+}
+
+/* Transform into an 'X' */
+.close-bar .line1 {
+    transform: rotate(45deg) translate(2px, 2px);
+    width: 30px;
+    transform-origin: center;
+    position: absolute;
+}
+
+.close-bar .line2 {
+    transform: rotate(-45deg) translate(0px, 0px);
+    width: 30px;
+    transform-origin: center;
+    position: absolute;
+}
+
+/* Fix X shape explicitly */
+.close-bar .line1 {
+    transform: rotate(45deg);
+}
+
+.close-bar .line2 {
+    transform: rotate(-45deg);
+}
+
+
+
+
+.game-logo {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    pointer-events: auto;
+    font-weight: 800;
+    font-size: 1.5rem;
+    color: var(--text-color);
+    text-shadow: 0 0 10px var(--glow-color);
+    background: rgba(0, 20, 10, 0.6);
+    padding: 10px 20px;
+    border-radius: 30px;
+    border: 1px solid rgba(74, 222, 128, 0.3);
+    backdrop-filter: blur(5px);
+}
+
+.logo-icon {
+    width: 30px;
+    height: 30px;
+    filter: drop-shadow(0 0 5px var(--glow-color));
+}
+
+.scene {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    cursor: pointer;
+    /* Indicates interactivity */
+}
+
+.title {
+    font-size: 6rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: transparent;
+    -webkit-text-stroke: 2px rgba(200, 255, 200, 0.2);
+    background: linear-gradient(to bottom, #e0ffe4, #4a6652);
+    -webkit-background-clip: text;
+    background-clip: text;
+    position: relative;
+    z-index: 20;
+
+    /* Animation */
+    opacity: 0;
+    transform: translateY(50px);
+    animation:
+        comeUp 2s cubic-bezier(0.22, 1, 0.36, 1) forwards,
+        glitchGlow 4s infinite alternate 2s;
+}
+
+.runner-container {
+    position: absolute;
+    bottom: 0px;
+    left: -100px;
+    width: 200px;
+    height: 200px;
+    z-index: 5;
+    opacity: 0.8;
+    filter: blur(0.5px);
+    animation: runAcross 8s linear infinite 1s;
+}
+
+.runner-container-game {
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 250px;
+    height: 250px;
+    z-index: 10;
+    opacity: 1;
+    filter: none;
+    --current-x: -50%;
+}
+
+.runner-svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 0 15px rgba(0, 0, 0, 0.7));
+    animation: bodyRun 0.4s ease-in-out infinite;
+}
+
+.leg-left {
+    animation: legRun 0.4s infinite alternate;
+}
+
+.leg-right {
+    animation: legRun 0.4s infinite alternate-reverse;
+}
+
+.arm-left {
+    animation: armRun 0.4s infinite alternate;
+}
+
+.arm-right {
+    animation: armRun 0.4s infinite alternate-reverse;
+}
+
+@keyframes bodyRun {
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(-1deg);
+    }
+
+    50% {
+        transform: translateY(-10px) rotate(1deg);
+    }
+}
+
+@keyframes legRun {
+    from {
+        transform: scaleY(1);
+    }
+
+    to {
+        transform: scaleY(0.7);
+    }
+}
+
+@keyframes armRun {
+    from {
+        transform: translateX(-5px);
+    }
+
+    to {
+        transform: translateX(5px);
+    }
+}
+
+.runner {
+    width: 100%;
+    height: 100%;
+    fill: #08160e;
+    filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.8));
+}
+
+/* Fog Effect */
+.fog-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.fog-img {
+    position: absolute;
+    height: 100vh;
+    width: 300vw;
+    background: url('https://raw.githubusercontent.com/danielstuart14/CSS_FOG_ANIMATION/master/fog1.png') repeat-x;
+    background-size: contain;
+    animation: fogMove 60s linear infinite;
+}
+
+.fog-img-second {
+    background: url('https://raw.githubusercontent.com/danielstuart14/CSS_FOG_ANIMATION/master/fog2.png') repeat-x;
+    background-size: contain;
+    animation: fogMove 40s linear infinite reverse;
+    opacity: 0.5;
+}
+
+@keyframes comeUp {
+    0% {
+        opacity: 0;
+        transform: translateY(100px) scale(0.9);
+        filter: blur(10px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+    }
+}
+
+@keyframes glitchGlow {
+    0% {
+        text-shadow: 0 0 10px var(--glow-color);
+    }
+
+    50% {
+        text-shadow: 0 0 30px var(--glow-color), 0 0 10px #ff0000;
+    }
+
+    100% {
+        text-shadow: 0 0 20px var(--glow-color), 0 0 60px var(--horror-fog);
+    }
+}
+
+@keyframes runAcross {
+    0% {
+        left: -20%;
+        transform: scaleX(1);
+    }
+
+    100% {
+        left: 120%;
+        transform: scaleX(1);
+    }
+}
+
+@keyframes fogMove {
+    0% {
+        transform: translate3d(0, 0, 0);
+    }
+
+    100% {
+        transform: translate3d(-200vw, 0, 0);
+    }
+}
+
+@media (max-width: 768px) {
+    .title {
+        font-size: 3rem;
+    }
+
+    .runner-container {
+        width: 100px;
+        height: 100px;
+    }
+
+    .game-logo {
+        top: 20px;
+        right: 20px;
+        font-size: 1.2rem;
+    }
+
+    .close-bar {
+        top: 20px;
+        left: 20px;
+        width: 30px;
+        height: 30px;
+    }
+}
+
+/* Hidden Home Screen */
+.home-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1s ease;
+    background: radial-gradient(circle at center, #0a1f10 0%, #000000 80%);
+}
+
+.home-screen.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.home-title {
+    font-size: 4rem;
+    color: var(--text-color);
+    margin-bottom: 2rem;
+    text-shadow: 0 0 20px var(--glow-color);
+    text-transform: uppercase;
+}
+
+.start-btn {
+    padding: 15px 50px;
+    font-size: 1.5rem;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: #000;
+    background: var(--glow-color);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 0 20px var(--glow-color);
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+}
+
+.start-btn:hover {
+    background: #fff;
+    box-shadow: 0 0 40px var(--glow-color), 0 0 10px #fff;
+    transform: scale(1.05);
+}
+
+/* Settings Button on Home Screen */
+.settings-icon-container {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    width: 50px;
+    height: 50px;
+    background: rgba(0, 20, 10, 0.6);
+    border: 1px solid rgba(74, 222, 128, 0.3);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-color);
+    cursor: pointer;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 0 15px rgba(74, 222, 128, 0.2);
+    transition: all 0.3s ease;
+    z-index: 60;
+    /* Higher than home screen content */
+}
+
+.settings-icon-container:hover {
+    transform: rotate(90deg) scale(1.1);
+    box-shadow: 0 0 25px var(--glow-color);
+    background: var(--glow-color);
+    color: #000;
+}
+
+.settings-svg {
+    width: 30px;
+    height: 30px;
+}
+
+/* Settings Modal */
+.settings-modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(10px);
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.settings-modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.settings-content {
+    width: 90%;
+    max-width: 400px;
+    background: rgba(10, 30, 20, 0.9);
+    border: 1px solid var(--glow-color);
+    border-radius: 20px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    box-shadow: 0 0 50px rgba(74, 222, 128, 0.15);
+    transform: scale(0.9);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.settings-modal-overlay.active .settings-content {
+    transform: scale(1);
+}
+
+.settings-title {
+    color: var(--glow-color);
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 10px;
+    text-shadow: 0 0 10px var(--glow-color);
+}
+
+/* Toggle Rows */
+.setting-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(74, 222, 128, 0.1);
+}
+
+.setting-label {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 1.2rem;
+    color: var(--text-color);
+}
+
+.setting-icon {
+    width: 24px;
+    height: 24px;
+    color: var(--glow-color);
+}
+
+/* Custom Toggle Switch */
+.toggle-switch {
+    width: 50px;
+    height: 26px;
+    background: #1a1a1a;
+    border-radius: 13px;
+    position: relative;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    border: 1px solid #444;
+}
+
+.toggle-switch.active {
+    background: var(--glow-color);
+    border-color: var(--glow-color);
+}
+
+.toggle-circle {
+    width: 22px;
+    height: 22px;
+    background: #fff;
+    border-radius: 50%;
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    transition: transform 0.3s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.toggle-switch.active .toggle-circle {
+    transform: translateX(24px);
+}
+
+/* Controls Section */
+.controls-section {
+    margin-top: 10px;
+}
+
+.controls-section h4 {
+    color: var(--text-color);
+    margin-bottom: 15px;
+    text-align: center;
+    font-weight: 300;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+}
+
+.control-choices {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.control-card {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: all 0.3s ease;
+    color: #888;
+}
+
+.control-card:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.control-card.selected {
+    border-color: var(--glow-color);
+    background: rgba(74, 222, 128, 0.1);
+    color: var(--text-color);
+    box-shadow: 0 0 15px rgba(74, 222, 128, 0.1);
+}
+
+.control-icons {
+    display: flex;
+    gap: 5px;
+}
+
+.control-icons svg {
+    width: 32px;
+    height: 32px;
+}
+
+/* Select Button */
+.select-btn {
+    width: 100%;
+    padding: 15px;
+    margin-top: 20px;
+    background: transparent;
+    border: 1px solid var(--glow-color);
+    color: var(--glow-color);
+    font-family: inherit;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    font-weight: 800;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.2s ease;
+}
+
+.select-btn:hover {
+    background: var(--glow-color);
+    color: #000;
+    box-shadow: 0 0 20px var(--glow-color);
+}
+
+/* Game Loader */
+.loader-container {
+    margin-top: 30px;
+    position: relative;
+    width: 80px;
+    height: 80px;
+    display: none;
+    /* Hidden by default */
+    justify-content: center;
+    align-items: center;
+}
+
+.loader-container.active {
+    display: flex;
+}
+
+.loader-svg {
+    transform: rotate(-90deg);
+}
+
+.loader-bg {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.1);
+    stroke-width: 8;
+}
+
+.loader-progress {
+    fill: none;
+    stroke: var(--glow-color);
+    stroke-width: 8;
+    stroke-linecap: round;
+    stroke-dasharray: 283;
+    /* 2 * PI * 45 */
+    stroke-dashoffset: 283;
+    /* We will animate this class via JS or CSS class helper */
+    filter: drop-shadow(0 0 5px var(--glow-color));
+}
+
+.loader-container.active .loader-progress {
+    animation: loadCircle 3s linear forwards;
+}
+
+.loader-text {
+    position: absolute;
+    color: var(--text-color);
+    font-size: 1.5rem;
+    font-weight: 800;
+    text-shadow: 0 0 10px var(--glow-color);
+}
+
+@keyframes loadCircle {
+    0% {
+        stroke-dashoffset: 283;
+    }
+
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+/* Utility to hide the intro scene */
+.scene.fade-out {
+    opacity: 0;
+    transition: opacity 1s ease;
+    pointer-events: none;
+}
+
+/* --- Game Scene (Temple Run Style) --- */
+.game-scene {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: linear-gradient(to bottom, #05140a 0%, #000 70%);
+    perspective: 1000px;
+}
+
+/* Parallax Forest */
+.forest-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.tree-layer {
+    position: absolute;
+    bottom: 20%;
+    left: 0;
+    width: 300%;
+    height: 80%;
+    background-repeat: repeat-x;
+    background-position: bottom;
+    pointer-events: none;
+}
+
+.layer-far {
+    background: linear-gradient(to top, transparent, rgba(0, 0, 0, 0.5)), url('https://raw.githubusercontent.com/danielstuart14/CSS_FOG_ANIMATION/master/fog1.png');
+    background-size: 1000px;
+    opacity: 0.2;
+    animation: parallax 10s linear infinite;
+}
+
+.layer-mid {
+    background: url('https://raw.githubusercontent.com/danielstuart14/CSS_FOG_ANIMATION/master/fog2.png');
+    background-size: 800px;
+    opacity: 0.4;
+    animation: parallax 5s linear infinite reverse;
+}
+
+/* Road with Perspective */
+.road-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 40%;
+    display: flex;
+    justify-content: center;
+    perspective: 800px;
+    z-index: 5;
+}
+
+.road {
+    width: 40%;
+    height: 300%;
+    background: linear-gradient(to bottom, #111 0%, #05140a 100%);
+    transform: rotateX(70deg);
+    transform-origin: top;
+    position: relative;
+    box-shadow: 0 0 50px rgba(74, 222, 128, 0.2);
+    border-left: 2px solid rgba(74, 222, 128, 0.3);
+    border-right: 2px solid rgba(74, 222, 128, 0.3);
+}
+
+.road::after {
+    content: '';
+    position: absolute;
+    top: -100%;
+    left: 50%;
+    width: 4px;
+    height: 200%;
+    background: repeating-linear-gradient(to bottom,
+            transparent,
+            transparent 40px,
+            rgba(74, 222, 128, 0.4) 40px,
+            rgba(74, 222, 128, 0.4) 80px);
+    transform: translateX(-50%);
+    animation: roadMove 0.4s linear infinite;
+}
+
+
+
+.runner-svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 0 15px rgba(0, 0, 0, 0.9));
+}
+
+.runner-container-game .runner-svg {
+    animation: runnerSway 0.6s ease-in-out infinite;
+}
+
+.runner-container-game .leg-left {
+    animation: legRun 0.3s infinite alternate;
+    transform-origin: 50% 60%;
+}
+
+.runner-container-game .leg-right {
+    animation: legRun 0.3s infinite alternate-reverse;
+    transform-origin: 50% 60%;
+}
+
+.runner-container-game .arm-left {
+    animation: armRun 0.3s infinite alternate;
+    transform-origin: 30% 28%;
+}
+
+.runner-container-game .arm-right {
+    animation: armRun 0.3s infinite alternate-reverse;
+    transform-origin: 70% 28%;
+}
+
+@keyframes runnerSway {
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    25% {
+        transform: translateY(-12px) rotate(-2deg);
+    }
+
+    50% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    75% {
+        transform: translateY(-12px) rotate(2deg);
+    }
+}
+
+.runner-svg.front-view {
+    animation: idleStanding 3s ease-in-out infinite, runIntoRoad 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Standing/Surfing Posture - No active pumping */
+.runner-container-game .front-view .leg-left {
+    transform: translateY(0) scaleY(1);
+}
+
+.runner-container-game .front-view .leg-right {
+    transform: translateY(0) scaleY(1);
+}
+
+.runner-container-game .front-view .arm-left {
+    transform: rotate(5deg);
+    transform-origin: 35% 35%;
+}
+
+.runner-container-game .front-view .arm-right {
+    transform: rotate(-5deg);
+    transform-origin: 65% 35%;
+}
+
+.runner-container-game .front-view .shirt-front {
+    animation: breathing 3s ease-in-out infinite;
+    transform-origin: center;
+}
+
+@keyframes idleStanding {
+
+    0%,
+    100% {
+        transform: translateY(0) scale(1.05) rotate(0deg);
+    }
+
+    50% {
+        transform: translateY(-5px) scale(1.04) rotate(0.5deg);
+    }
+}
+
+@keyframes breathing {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.02);
+    }
+}
+
+@keyframes runIntoRoad {
+    0% {
+        transform: translateY(300px) scale(3);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0) scale(1.05);
+        opacity: 1;
+    }
+}
+
+/* UI Overlay */
+.ui-overlay {
+    position: absolute;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+}
+
+.score {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--glow-color);
+    text-shadow: 0 0 10px var(--glow-color);
+    background: rgba(0, 0, 0, 0.6);
+    padding: 10px 40px;
+    border-radius: 30px;
+    border: 1px solid rgba(74, 222, 128, 0.3);
+    backdrop-filter: blur(10px);
+}
+
+.pause-btn {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    width: 55px;
+    height: 55px;
+    background: rgba(0, 30, 15, 0.8);
+    border: 2px solid var(--glow-color);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--glow-color);
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 1000;
+    box-shadow: 0 0 20px rgba(74, 222, 128, 0.2);
+}
+
+.pause-btn:hover {
+    background: var(--glow-color);
+    color: #000;
+    transform: scale(1.1) rotate(-10deg);
+    box-shadow: 0 0 30px var(--glow-color);
+}
+
+.pause-btn svg {
+    width: 24px;
+    height: 24px;
+}
+
+/* Pause Menu */
+.pause-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(15px);
+    z-index: 2000;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.pause-menu-overlay.active {
+    display: flex;
+}
+
+.pause-content {
+    background: rgba(10, 30, 20, 0.95);
+    border: 1px solid var(--glow-color);
+    border-radius: 20px;
+    padding: 40px;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    box-shadow: 0 0 50px rgba(74, 222, 128, 0.1);
+}
+
+.pause-title {
+    color: var(--glow-color);
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 2rem;
+    margin-bottom: 20px;
+    letter-spacing: 5px;
+}
+
+.pause-option-btn {
+    padding: 15px;
+    background: transparent;
+    border: 1px solid var(--glow-color);
+    color: var(--text-color);
+    font-family: inherit;
+    text-transform: uppercase;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.2s ease;
+}
+
+.pause-option-btn:hover {
+    background: var(--glow-color);
+    color: #000;
+}
+
+.pause-option-btn.quit {
+    margin-top: 10px;
+    border-color: #ff4444;
+    color: #ff4444;
+}
+
+.pause-option-btn.quit:hover {
+    background: #ff4444;
+    color: #fff;
+}
+
+.tap-start {
+    position: absolute;
+    bottom: 100px;
+    font-size: 1.5rem;
+    color: var(--glow-color);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    animation: blink 2s infinite;
+    text-shadow: 0 0 10px var(--glow-color);
+    pointer-events: none;
+    z-index: 25;
+}
+
+/* Side Trees (Passing by Effect) */
+.side-trees {
+    position: absolute;
+    bottom: 0;
+    width: 50%;
+    height: 100%;
+    z-index: 6;
+    /* On top of road for overlapping branches hook */
+    pointer-events: none;
+}
+
+.side-trees.left {
+    left: 0;
+    background: url('https://pngimg.com/uploads/pine_tree/pine_tree_PNG92736.png') repeat-y;
+    background-size: 100% auto;
+    background-position: left center;
+    filter: brightness(0.3) contrast(1.2) drop-shadow(0 0 10px rgba(0, 0, 0, 0.9));
+    mask-image: linear-gradient(to right, black 50%, transparent);
+    -webkit-mask-image: linear-gradient(to right, black 50%, transparent);
+}
+
+.side-trees.right {
+    right: 0;
+    background: url('https://pngimg.com/uploads/pine_tree/pine_tree_PNG92736.png') repeat-y;
+    background-size: 100% auto;
+    background-position: right center;
+    transform: scaleX(-1);
+    filter: brightness(0.2) contrast(1.2) drop-shadow(0 0 10px rgba(0, 0, 0, 0.9));
+    mask-image: linear-gradient(to right, black 50%, transparent);
+    -webkit-mask-image: linear-gradient(to right, black 50%, transparent);
+}
+
+/* Dense Forest Passing Animation */
+.side-trees::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: url('https://pngimg.com/uploads/pine_tree/pine_tree_PNG92736.png') repeat-y;
+    background-size: 150% auto;
+    opacity: 0.8;
+}
+
+.left::before {
+    left: 0;
+    animation: treesPassLeft 0.6s linear infinite;
+    filter: brightness(0.1);
+}
+
+.right::before {
+    right: 0;
+    animation: treesPassRight 0.6s linear infinite;
+    filter: brightness(0.05);
+}
+
+@keyframes treesPassLeft {
+    0% {
+        transform: skewX(-15deg) translateX(0);
+    }
+
+    100% {
+        transform: skewX(-15deg) translateX(-100px);
+    }
+}
+
+@keyframes treesPassRight {
+    0% {
+        transform: skewX(15deg) translateX(0);
+    }
+
+    100% {
+        transform: skewX(15deg) translateX(100px);
+    }
+}
+
+/* --- Lane System --- */
+.runner-container-game.lane-0 {
+    transform: translateX(-200%);
+}
+
+.runner-container-game.lane-1 {
+    transform: translateX(-50%);
+}
+
+.runner-container-game.lane-2 {
+    transform: translateX(100%);
+}
+
+.runner-container-game.jumping {
+    animation: jump 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+@keyframes jump {
+
+    0%,
+    100% {
+        bottom: 10%;
+        transform: translateX(var(--current-x, -50%)) scale(1);
+    }
+
+    50% {
+        bottom: 35%;
+        transform: translateX(var(--current-x, -50%)) scale(1.1);
+    }
+}
+
+/* Obstacles (Dangerous Stone) */
+.obstacle {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 70px;
+    height: 70px;
+    background: #333;
+    clip-path: polygon(25% 0%, 75% 10%, 100% 40%, 90% 85%, 50% 100%, 10% 80%, 0% 45%);
+    background: radial-gradient(circle at 30% 30%, #555, #222);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    transform-origin: bottom center;
+    z-index: 8;
+    border: none;
+}
+
+.obstacle::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(0, 0, 0, 0.2) 5px, rgba(0, 0, 0, 0.2) 10px);
+    opacity: 0.3;
+}
+
+@keyframes obstacleApproach {
+    0% {
+        transform: translate(-50%, -400px) scale(0.1);
+        opacity: 0;
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: translate(-50%, 100px) scale(2);
+        opacity: 1;
+    }
+}
+
+/* Game Over Overlay */
+.game-over {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 200;
+    color: #ff4444;
+}
+
+.game-over h2 {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    text-shadow: 0 0 20px #ff0000;
+}
+
+.final-score {
+    font-size: 2rem;
+    color: white;
+    margin-bottom: 2rem;
+}
+
+.game-over-actions {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.restart-btn,
+.home-btn-go {
+    padding: 15px 40px;
+    font-size: 1.2rem;
+    background: var(--glow-color);
+    border: none;
+    color: black;
+    cursor: pointer;
+    font-weight: 800;
+    text-transform: uppercase;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.home-btn-go {
+    background: transparent;
+    border: 1px solid var(--glow-color);
+    color: var(--glow-color);
+}
+
+.home-btn-go:hover {
+    background: var(--glow-color);
+    color: #000;
+}
+
+.restart-btn:hover {
+    transform: scale(1.05);
+    background: #fff;
+}
+
+/* Animations update */
+@keyframes parallax {
+    from {
+        background-position: 0 0;
+    }
+
+    to {
+        background-position: -2000px 0;
+    }
+}
+
+@keyframes roadMove {
+    from {
+        transform: translateX(-50%) translateY(0);
+    }
+
+    to {
+        transform: translateX(-50%) translateY(80px);
+    }
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.3;
+    }
+}
+
+.hit-shake {
+    animation: shake 0.5s cubic-bezier(.36, .07, .19, .97) both;
+}
+
+@keyframes shake {
+
+    10%,
+    90% {
+        transform: translate3d(-1px, 0, 0);
+    }
+
+    20%,
+    80% {
+        transform: translate3d(2px, 0, 0);
+    }
+
+    30%,
+    50%,
+    70% {
+        transform: translate3d(-4px, 0, 0);
+    }
+
+    40%,
+    60% {
+        transform: translate3d(4px, 0, 0);
+    }
+}
+
+.damage-flash {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: radial-gradient(circle, rgba(255, 0, 0, 0.5) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 9999;
+    animation: flashFade 0.6s ease-out forwards;
+}
+
+@keyframes flashFade {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(1.5);
+    }
+}
